@@ -1,0 +1,40 @@
+ int l=x.length();
+        int i=0;
+        stack<char> st;
+        while(i<l){
+            if(x[i]=='('||x[i]=='['||x[i]=='{'){
+            //cout<<"hi"<<endl;
+            st.push(x[i]);
+            //cout<<st.size()<<endl;
+            }
+            else if(x[i]==')'){
+                if(st.size()==0)
+                return false;
+                else if(st.top()!='(')
+                return false;
+                else 
+                st.pop();
+            }
+            else if(x[i]==']'){
+                if(st.size()==0)
+                return false;
+                else if(st.top()!='[')
+                return false;
+                else 
+               st.pop();
+            }else if(x[i]=='}'){
+                if(st.size()==0)
+                return false;
+                else if(st.top()!='{')
+                return false;
+                else 
+                st.pop();
+            }
+            i++;
+        }
+       // cout<<st.size()<<endl;
+        if(st.size()==0)
+        return true;
+        else 
+        return false;
+        
