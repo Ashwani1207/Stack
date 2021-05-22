@@ -1,0 +1,83 @@
+int prec(char c){//for operator precedence
+if(c=='+'||c=='-')
+return 1;
+else if(c=='/'||c=='*'||c=='%')
+return 2;
+else if(c=='^')
+return 3;
+else 
+return 0;
+}
+
+
+class Solution
+{
+    public:
+    //Function to convert an infix expression to a postfix expression.
+    string infixToPostfix(string s)
+    {
+       
+       // Your code here
+     stack<string> si;
+     stack<char> sc;
+     for(int i=0;i<s.length();i++){
+if(s[i]=='(')
+sc.push(s[i]);
+else if((s[i]>='a'&&s[i]<='z')||(s[i]>='A'&&s[i]<='Z'))
+{
+//int val=s[i]-'0';
+string ans="";
+ans+=s[i];
+si.push(ans);
+ans="";
+}
+else if(s[i]==')')
+{
+while(sc.top()!='(')//we goona pop until ( bracket strike
+{
+    string v2=si.top();
+    si.pop();
+string v1=si.top(); 
+si.pop();
+char c=sc.top();
+sc.pop();
+
+string op=v1+v2+c;
+si.push(op);
+}
+
+sc.pop();
+
+}
+else if(s[i]=='+'||s[i]=='-'||s[i]=='*'||s[i]=='/'||s[i]=='^'){
+while((sc.size()>0)&&(sc.top()!='(')&&(prec(s[i])<=prec(sc.top())))
+{
+string v2=si.top();
+    si.pop();
+string v1=si.top(); 
+si.pop();
+char c=sc.top();
+sc.pop();
+
+string op=v1+v2+c;
+si.push(op);
+}
+sc.push(s[i]);
+}
+}
+while(sc.size()>0)//in case loop terminated but elements are there 2+3*6
+{
+string v2=si.top();
+    si.pop();
+string v1=si.top(); 
+si.pop();
+char c=sc.top();
+sc.pop();
+
+string op=v1+v2+c;
+si.push(op);
+}
+//cout<<si.top()<<endl;
+return si.top();
+}
+}
